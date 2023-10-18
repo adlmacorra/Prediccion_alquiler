@@ -1,11 +1,14 @@
 import pickle
 from constants import label_to_encoded, rng, sleep, Registros_por_Distrito
 from sklearn.ensemble import RandomForestRegressor
+import numpy as np
+import xgboost
+import pandas as pd
 
 # Cargar modelo desde el archivo pickle
-with open("RF_modelo_entrenado.pkl", 'rb') as file:
+with open("XGB_modelo_entrenado.pkl", 'rb') as file:
     modelo_cargado = pickle.load(file)
-rf_regressor = modelo_cargado["rf_regressor"]
+xgb_regressor = modelo_cargado["XGB_regressor"]
 
 label_encoders = label_to_encoded # Diccionario en fichero constants.py del label encoding que se hizo durante el modelado
 
@@ -31,9 +34,11 @@ def encode_solicitud(solicitud, label_encoders): # Encode las columnas categoric
         if key in encoded_solicitud:
             encoded_solicitud[key] = label_encoders[key][encoded_solicitud[key]]
     
-    return encoded_solicitud
+    encoded_solicitud_list = []
+    encoded_solicitud_list.append(encoded_solicitud)
+    return encoded_solicitud_list
 
-def estimacion(encoded_solicitud): # Usar la encoded solicitud para hacer la estimacion de precio mensual
+def estimacion(encoded_solicitud_list): # Usar la encoded solicitud para hacer la estimacion de precio mensual
     """
     Utiliza la encoded_solicitud para hacer la prediccion usando modelo rf_regressor
     
@@ -47,7 +52,11 @@ def estimacion(encoded_solicitud): # Usar la encoded solicitud para hacer la est
     """
 
     # Predecir el precio de renta para el nuevo_listing
-    predicted_price = rf_regressor.predict([list(encoded_solicitud.values())])[0].round(2)
+    data = pd.DataFrame(encoded_solicitud_list)
+    data['Furnished'] = data['Furnished'].astype('category')
+    print(data)
+    predicted_price = xgb_regressor.predict(data)
+    predicted_price = int(np.around(predicted_price, -2)[0])
 
     #Un pequeño delay en el calculo
     time_to_sleep = rng.uniform(1, 3)
@@ -95,7 +104,7 @@ def query(tipo, distrito, barrio, hab, banos, area, furnished):
 
     return encoded_solicitud   
 
-def fiability(distrito):
+def fiability(distrito, condicion):
     """
     Revisar el numero de registros de viviendas en el distrito solicitado en el query para dar una metrica
     de fiabilidad del modelo.
@@ -110,9 +119,30 @@ def fiability(distrito):
     """
     # Revisar numero de registros en el distrito del query
     number = Registros_por_Distrito[distrito]
+
     if number >= 1000:
-        return "Fiabilidad Alta. {} viviendas media estancia en Distrito: {}".format(number, distrito)
+        return "Fiabilidad Alta"
     elif 300 < number < 1000:
-        return "Fiabilidad Media. {} viviendas media estancia en Distrito: {}".format(number, distrito)
+        return "Fiabilidad Media"
     elif number < 300:
-        return "Fiabilidad Baja. {} viviendas media estancia en Distrito: {}".format(number, distrito)
+        return "Fiabilidad Baja"
+ 
+#funcion de fiabilidad para tres clases, alta media baja, con la tabla de idealista por barrio
+precision_diana = (.84,.76,.74)
+
+def fiabilidad_prueba_ponderada(prediccion,m2,distrito):
+    if fiability(distrito) ==  "Fiabilidad Alta":
+        alpha = precision_diana[0]
+    elif fiability(distrito) ==  "Fiabilidad Media":
+        alpha = precision_diana[1]
+    else: alpha = precision_diana[2]
+
+    return ((((alpha)*(prediccion/m2) + (1-alpha)*diccionario_idealista_m2[distrito]))*m2 )
+
+
+
+#no se puede poner directamente la fiabilidad de diana. 
+# hay que ajustar con la ponderacion para dar mas pesos a idealista en fiabilidades altas y menos en bajas
+
+def estimacion_ajustada(estimacion):
+	return fiabilidad_prueba_ponderada(prediccion=estimacion,m2=area,distrito=distrito)
