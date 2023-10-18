@@ -397,3 +397,33 @@ Registros_por_Distrito = {
     'Villa de Vallecas' : 40,
     'Villaverde' : 87,
 }
+
+Distritos1 = ['Barajas', 'Carabanchel', 'Fuencarral' , 'Hortaleza', 'Latina', 'Moratalaz', 'Puente de Vallecas' , 'San Blas' , 'Usera' , 'Vicálvaro', 'Villa de Vallecas', 'Villaverde' ]
+Distritos2 = ['Arganzuela' , 'Chamartín' , 'Ciudad Lineal' , 'Moncloa' , 'Retiro' , 'Tetuán' ]
+Distritos3 = ['Centro' , 'Chamberí', 'Salamanca' ]
+
+diccionario_idealista_m2 = {
+    'Arganzuela': 17.2,
+    'Barajas': 13.6,
+    'Carabanchel': 13.7,
+    'Centro': 20.6,
+    'Chamartín': 18.1,
+    'Chamberí': 20.6,
+    'Ciudad Lineal': 15.4,
+    'Fuencarral': 14.1,
+    'Hortaleza': 14.5,
+    'Latina': 13.8,
+    'Moncloa': 17.1,
+    'Moratalaz': 12.7,
+    'Puente de Vallecas': 13.9,
+    'Retiro': 18.0,
+    'Salamanca': 21.8,
+    'San Blas': 13.3,
+    'Tetuán': 17.5,
+    'Usera': 13.8,
+    'Vicálvaro': 12.3,
+    'Villa de Vallecas': 12.7,
+    'Villaverde': 12.7
+}
+
+
