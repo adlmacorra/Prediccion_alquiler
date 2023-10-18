@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from predict import query, estimacion, fiability
 from constants import *
@@ -22,14 +22,14 @@ def form():
         banos = int(request.form['banos'])
         area = float(request.form['area'])
         furnished = request.form['muebles']
-        condicion = request.form['condicion']
+        # condicion = request.form['condicion']
 
         # Se pasa la solicitud del usuario por la funcion de query para conseguir la solicitud encoded
         solicitud = query(tipo, distrito, barrio, hab, banos, area, furnished)
     
         # Proceder con la valoracion en base a la solicitud del usuario
-        prediction = estimacion(solicitud, area)
-        fiabilidad = fiability(distrito, condicion, area, prediction)
+        prediction = estimacion(solicitud, area, distrito)
+        fiabilidad = fiability(distrito) # condicion, area, prediction
 
         return render_template('prediction.html', prediction=prediction, fiabilidad=fiabilidad)
     return render_template('form.html')
@@ -40,7 +40,7 @@ def api_predict():
         data = request.get_json()
     
         # Verificando que los parametros esperados estan en el JSON recibido
-        expected_params = ['tipo', 'distrito', 'barrio', 'hab', 'banos', 'area', 'furnished' , 'condicion']
+        expected_params = ['tipo', 'distrito', 'barrio', 'hab', 'banos', 'area', 'furnished' ] #'condicion'
         for param in expected_params:
             if param not in data:
                 return jsonify({'error': f'Parametro {param} recibido no previsto'}), 40
@@ -53,14 +53,15 @@ def api_predict():
         banos = data['banos']
         area = data['area']
         furnished = data['furnished']
-        condicion = data['condicion']
+        # condicion = data['condicion']
 
         # Se pasa la solicitud de full stack por la funcion de query para conseguir la solicitud encoded
         solicitud = query(tipo, distrito, barrio, hab, banos, area, furnished)
         
         # Obtener la valoracion
-        prediction = estimacion(solicitud, area)
-        fiabilidad = fiability(distrito, condicion, area, prediction)
+        prediction = estimacion(solicitud, area, distrito)
+        fiabilidad = fiability(distrito)
+
 
         # Return la valoracion del modelo en JSON
         return jsonify({'prediction': prediction,
