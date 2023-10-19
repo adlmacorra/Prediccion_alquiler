@@ -401,11 +401,13 @@ Registros_por_Distrito = {
 
 # División de distritos en grupos de precio para poder suavizar outliers dentro de cada grupo
 
+
 Distritos1 = ['Barajas', 'Carabanchel', 'Fuencarral' , 'Hortaleza', 'Latina', 'Moratalaz', 'Puente de Vallecas' , 'San Blas' , 'Usera' , 'Vicálvaro', 'Villa de Vallecas', 'Villaverde' ]
 Distritos2 = ['Arganzuela' , 'Chamartín' , 'Ciudad Lineal' , 'Moncloa' , 'Retiro' , 'Tetuán' ]
 Distritos3 = ['Centro' , 'Chamberí', 'Salamanca' ]
 
 # Estimación de precio/m2 y barrio de idealista, para ponderar contra prediccion del modelo
+
 diccionario_idealista_m2 = {
     'Arganzuela': 17.2,
     'Barajas': 13.6,
@@ -432,5 +434,6 @@ diccionario_idealista_m2 = {
 
 # Vector de precisiones por clases segñun cantidad de registros, para usar en ajuste ponderado
 precision_diana = (.84,.76,.74)
+
 
 
