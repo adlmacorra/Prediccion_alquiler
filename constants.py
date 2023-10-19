@@ -374,6 +374,7 @@ Distritos_Barrios_MAD = {'Chamartín': (['Bernabéu - Hispanoamérica', 'Prosper
  'Villa de Vallecas': (['Casco Histórico de Vallecas', 'Santa Eugenia', 'Ensanche de Vallecas - Valdecarros']),
  'Vicálvaro': (['Casco histórico de Vicálvaro', 'Ambroz' , 'El Cañaveral - Los Berrocales', 'Valdebernardo - Valderribas'])}
 
+# Número de registros por distrito, para impplementar función de fiabilidad
 Registros_por_Distrito = {
     'Arganzuela' : 1026,
     'Barajas' : 22,
@@ -398,9 +399,13 @@ Registros_por_Distrito = {
     'Villaverde' : 87,
 }
 
+# División de distritos en grupos de precio para poder suavizar outliers dentro de cada grupo
+
 Distritos1 = ['Barajas', 'Carabanchel', 'Fuencarral' , 'Hortaleza', 'Latina', 'Moratalaz', 'Puente de Vallecas' , 'San Blas' , 'Usera' , 'Vicálvaro', 'Villa de Vallecas', 'Villaverde' ]
 Distritos2 = ['Arganzuela' , 'Chamartín' , 'Ciudad Lineal' , 'Moncloa' , 'Retiro' , 'Tetuán' ]
 Distritos3 = ['Centro' , 'Chamberí', 'Salamanca' ]
+
+# Estimación de precio/m2 y barrio de idealista, para ponderar contra prediccion del modelo
 
 diccionario_idealista_m2 = {
     'Arganzuela': 17.2,
@@ -425,5 +430,6 @@ diccionario_idealista_m2 = {
     'Villa de Vallecas': 12.7,
     'Villaverde': 12.7
 }
+
 
 
