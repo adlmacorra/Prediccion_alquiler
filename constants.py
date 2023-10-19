@@ -406,7 +406,6 @@ Distritos2 = ['Arganzuela' , 'Chamartín' , 'Ciudad Lineal' , 'Moncloa' , 'Retir
 Distritos3 = ['Centro' , 'Chamberí', 'Salamanca' ]
 
 # Estimación de precio/m2 y barrio de idealista, para ponderar contra prediccion del modelo
-
 diccionario_idealista_m2 = {
     'Arganzuela': 17.2,
     'Barajas': 13.6,
@@ -431,5 +430,7 @@ diccionario_idealista_m2 = {
     'Villaverde': 12.7
 }
 
+# Vector de precisiones por clases segñun cantidad de registros, para usar en ajuste ponderado
+precision_diana = (.84,.76,.74)
 
 
