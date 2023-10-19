@@ -128,7 +128,28 @@ def fiability(distrito):
         return "Fiabilidad Baja"
 
 def modified_price(predicted_price, area, distrito):
+
+    """
+    
+    Ponderación de la predicción del modelo según la precisión contra la tabla de estimaciones por m2 de idealista
+    
+    Parametros:
+    - predicted_price: number
+        La predicción de precio del XGB
+    - area: texto
+        Area en metros cuadrados de la vivienda
+    - distrito: texto
+        El input de distrito de Madrid donde esta ubicada la vivienda
+
+    Returns:
+    - modified_price: number
+        Precio tras ponderar según fiabilidad contra la tabla de estimaciones de idealista
+        
+    """
+    
+
     #funcion de fiabilidad para tres clases, alta media baja, con la tabla de idealista por barrio
+
     precision_diana = (.84, .76, .74)
     if fiability(distrito) ==  "Fiabilidad Alta":
         alpha = precision_diana[0]
@@ -137,5 +158,7 @@ def modified_price(predicted_price, area, distrito):
     else: alpha = precision_diana[2]
 
     modified_price = ((((alpha)*(predicted_price / area) + (1-alpha) * diccionario_idealista_m2[distrito])) * area )
+
+    return modified_price
 
     return modified_price
