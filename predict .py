@@ -160,5 +160,3 @@ def modified_price(predicted_price, area, distrito):
     modified_price = ((((alpha)*(predicted_price / area) + (1-alpha) * diccionario_idealista_m2[distrito])) * area )
 
     return modified_price
-
-    return modified_price
