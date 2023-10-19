@@ -45,7 +45,7 @@ def estimacion(encoded_solicitud_list, area, distrito): # Usar la encoded solici
         El input diccionary con los campos categoricos encoded.
 
     Returns:
-    - predicted_price: number
+    - predicted_price: int
         La version encoded del input solicitud.
     """
 
@@ -56,7 +56,7 @@ def estimacion(encoded_solicitud_list, area, distrito): # Usar la encoded solici
     predicted_price = int(np.around(predicted_price, -2)[0])
 
     # Validar y hacer ajustes al predicted_price
-    modified_price(predicted_price, area, distrito)
+    predicted_price = int(modified_price(predicted_price, area, distrito))
 
     #Un pequeño delay en el calculo
     time_to_sleep = rng.uniform(1, 3)
@@ -134,7 +134,7 @@ def modified_price(predicted_price, area, distrito):
     Ponderación de la predicción del modelo según la precisión contra la tabla de estimaciones por m2 de idealista
     
     Parametros:
-    - predicted_price: number
+    - predicted_price: int
         La predicción de precio del XGB
     - area: texto
         Area en metros cuadrados de la vivienda
@@ -142,7 +142,7 @@ def modified_price(predicted_price, area, distrito):
         El input de distrito de Madrid donde esta ubicada la vivienda
 
     Returns:
-    - modified_price: number
+    - modified_price: float
         Precio tras ponderar según fiabilidad contra la tabla de estimaciones de idealista
         
     """
