@@ -16,7 +16,7 @@ pd.set_option('display.expand_frame_repr', False)
 
 def set_browser_avoid_bot_detection():
     """
-    Trying to bypass website bot detection
+    Trata de evitar la proteccion contra bots
     :return: Chrome Driver
     """
 
@@ -36,7 +36,7 @@ def set_browser_avoid_bot_detection():
 
 def prepare_page(driver):
     """
-    Prepare the website, removing cookie panels, and other automatic elements
+    Prepara la pagina, eliminando cookies y otros elementos automáticoas
     :param driver: Chrome Driver
     """
 
@@ -55,7 +55,7 @@ def prepare_page(driver):
 
 def check_elements(list_of_equipment, house_elements):
     """
-    Check what elements or parameters each house has
+    Mira los parámetros de las casas
     :param list_of_equipment: All the elements that a house can have
     :param house_elements: The elements that each house have
     :return: Checked elements, two values (0, 1)
@@ -112,7 +112,7 @@ def check_elements(list_of_equipment, house_elements):
 
 def get_features(driver, madrid_location, place):
     """
-    Take all the characteristics of each house
+    Coge lasa caracteristicas de cada casa
     :param driver: Chrome Driver
     :param madrid_location: Location of the house
     :param place: Type of house
@@ -158,7 +158,7 @@ def get_features(driver, madrid_location, place):
 
 def get_home_info(driver, madrid_location):
     """
-    Collect all the information about each house
+    Recoge la informacion
     :param driver: Chrome Driver
     :param madrid_location: House location
     :return: Dataframe with all houses information of each location
